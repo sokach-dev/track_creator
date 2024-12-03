@@ -5,7 +5,7 @@ use serde::Deserialize;
 use sqlx::sqlite::SqlitePoolOptions;
 use sqlx::SqlitePool;
 use std::time::Duration;
-use tokio::time;
+use tokio::time::{self, sleep};
 use tracing::info;
 
 /*
@@ -56,7 +56,7 @@ async fn fetch_and_store_data(
         let offset = i * 50;
         let pump_url = format!("{}&offset={}&limit={}", pump_url, offset, limit);
         info!("Fetching data from pump url: {}", pump_url);
-        let resp = reqwest::get(pump_url)
+        let resp = reqwest::get(&pump_url)
             .await?
             .json::<Vec<CoinData>>()
             .await?;
@@ -74,7 +74,8 @@ async fn fetch_and_store_data(
             insert_record(&pool, mint.as_str(), creator.as_str(), symbol.as_str()).await?;
         }
 
-        info!("Data fetched and stored successfully");
+        info!("Data fetched and stored successfully, url: {}", pump_url);
+        sleep(Duration::from_secs(10)).await;
     }
     Ok(())
 }

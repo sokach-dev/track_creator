@@ -1,0 +1,4 @@
+database_url="sqlite:///data/db.sqlite3"
+interval_seconds=3000 # 300s请求一次
+pump_mc_url="https://frontend-api.pump.fun/coins?sort=market_cap&order=DESC&includeNsfw=false"
+pump_mc_url_index=5 # 不要太多了一次50个呢
