@@ -1,0 +1,3 @@
+
+database_url = "sqlite://./data/track_creator.sqlite3"
+interval_seconds = 3600  # 定时任务时间间隔，单位为秒
