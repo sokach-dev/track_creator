@@ -47,6 +47,10 @@ jobs:
 
       - name: Build
         run: |
+          cargo install sqlx-cli --no-default-features --features sqlite
+          export DATABASE_URL=sqlite:./db.sqlite
+          sqlx database create
+          sqlx migrate run
           cargo build --release --target ${{ matrix.platform.target }}
 
       - name: Prepare assets
